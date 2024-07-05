@@ -1,0 +1,36 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+a {
+  color: black;
+  text-decoration: none;
+}
+
+.navContainer {
+  height: 10vh;
+  padding: 0 15rem;
+  display: flex;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.logo {
+  font-size: 2.5rem;
+  font-weight: 800;
+}
+
+.navigationTabs {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+}
+
+.tab {
+  margin-left: 1rem;
+  font-size: 1.5rem;
+  font-weight: 500;
+}

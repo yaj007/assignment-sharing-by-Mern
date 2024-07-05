@@ -1,0 +1,53 @@
+.create-blog-form {
+    display: flex;
+    flex-direction: column;
+    width: 100%; /* Full width */
+    max-width: 800px; /* Adjusted max-width */
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+}
+
+.create-blog-form input[type="title"],
+.create-blog-form input[type="summary"],
+.create-blog-form input[type="file"] {
+    margin-bottom: 10px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%; /* Full width */
+}
+
+.create-blog-form input[type="title"]::placeholder,
+.create-blog-form input[type="summary"]::placeholder {
+    color: #aaa;
+}
+
+.create-blog-form input[type="file"] {
+    border: none;
+}
+
+.create-blog-form button {
+    padding: 10px 15px;
+    font-size: 16px;
+    color: white;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 5px;
+}
+
+.create-blog-form button:hover {
+    background-color: #0056b3;
+}
+
+.create-blog-form .editor-container {
+    margin-bottom: 10px;
+    width: 100%; /* Full width */
+}
