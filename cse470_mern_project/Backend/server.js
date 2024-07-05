@@ -4,22 +4,29 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const cookieParser = require('cookie-parser');
 const User = require('./models/userModel');
+const Blog = require('./models/blogModel');
+const multer = require('multer');
+const uploadMiddleware = multer({ dest: 'uploads/' });
+const fs = require('fs');
+
+
 
 const SECRET_KEY = 'super-secret-key';
+const dbURI = 'mongodb+srv://root:1234@cluster30.ognps4e.mongodb.net/UsersDB?retryWrites=true&w=majority&appName=CLuster30';
 
 // Connect to express app
 const app = express();
 
 // Connect to MongoDB
-const dbURI = 'mongodb+srv://root:1234@cluster30.ognps4e.mongodb.net/UsersDB?retryWrites=true&w=majority&appName=CLuster30';
 mongoose.connect(dbURI, {
-    useNewUrlParser: true, 
+    useNewUrlParser: true,
     useUnifiedTopology: true
 })
 .then(() => {
     app.listen(3001, () => {
-        console.log('Server connected to port 3001 and MongoDb');
+        console.log('Server connected to port 3001 and MongoDB');
     });
 })
 .catch((error) => {
@@ -28,8 +35,10 @@ mongoose.connect(dbURI, {
 
 // Middleware
 app.use(bodyParser.json());
-app.use(cors());
-
+app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
+app.use(express.json());
+app.use(cookieParser());
+app.use('/uploads', express.static(__dirname + '/uploads'));
 // Middleware to authenticate token
 const authenticateToken = (req, res, next) => {
     const authHeader = req.headers['authorization'];
@@ -145,3 +154,29 @@ app.get("/profile", async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
   });
+
+
+  app.post('/post', uploadMiddleware.single('file'), async (req, res) => {
+    const { originalname, path } = req.file;
+    const parts = originalname.split('.');
+    const ext = parts[parts.length - 1];
+    const newPath = path + '.' + ext;
+    fs.renameSync(path, newPath);
+  
+    const { token } = req.cookies;
+    jwt.verify(token, SECRET_KEY, {}, async (err, info) => {
+      if (err) return res.status(403).json({ error: 'Invalid token' });
+      const { title, summary, content } = req.body;
+      const postDoc = await Blog.create({
+        title,
+        summary,
+        content,
+        cover: newPath,
+        author: info.id,
+      });
+      res.json(postDoc);
+    });
+});
+
+
+

@@ -6,6 +6,7 @@ import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import Profile from './pages/Profile';
 import ChangePassword from './pages/ChangePassword'; // Corrected import
+import CreateBlog from './pages/CreateBlog';
 
 function App() {
   const isUserSignedIn = !!localStorage.getItem('token');
@@ -19,6 +20,7 @@ function App() {
         <Route path='/signup' element={<SignUp />} />
         {isUserSignedIn && <Route path='/profile' element={<Profile />} />}
         {isUserSignedIn && <Route path='/change-password' element={<ChangePassword />} />}
+        {isUserSignedIn && <Route path='/create-blog' element={<CreateBlog />} />}
       </Routes>
     </div>
   );

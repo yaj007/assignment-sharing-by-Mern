@@ -16,6 +16,7 @@ function Navbar() {
         <ul className='flex gap-6'>
             {isUserSignedIn ? (
                 <>
+                <Link to='/create-blog'><li>CreateBlog</li></Link>
                 <Link to='/profile'><li>Profile</li></Link>
                 <Link to='/change-password'><li>ChangePassword</li></Link>
                 <li><button onClick={handleSignOut}>Sign Out</button></li>
